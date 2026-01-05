@@ -1,20 +1,24 @@
 # To-Do-List in Python
+import os
 
 tasks = []
 
 def show_menu():
-    print("--- To Do List ---")
-    print("-- Author agungwin22 --")
-    print("1. Add Task")
-    print("2. View Task")
-    print("3. Mark Task as Done")
-    print("4. Delete Task")
-    print("5. Exit")
+    print("="*40)
+    print(f"{'--- To Do List ---':^40}")
+    print(f"{'-- Author agungwin22 --':^40}")
+    print("="*40)
+    print(" [1] \tAdd Task\n")
+    print(" [2] \tView Task\n")
+    print(" [3] \tMark Task as Done\n")
+    print(" [4] \tDelete Task")
 
 def add_task():
+    print("-"*40)
     task = input("Enter Task: ")
+    print("-"*40)
     tasks.append({"task": task, "done":False})
-    print(f"Task '{task}' Added!")
+    print(f'\nTask "{task}" Added!')
 
 def view_task():
     if not tasks: # ini adalah erro handling
@@ -25,10 +29,11 @@ def view_task():
         return
     print("\nYour Tasks: ")
     print("="*40)
+    print(f"    No.\t\tTasks\t\tMark")
+    print("-"*40)
     for index, task in enumerate(tasks, start=1):
-        status = "✅" if task["done"] else "❌"
-        
-        print(f"{index} {task['task']} [{status}]")
+        status = "V" if task["done"] else "X"
+        print(f"    [{index}] \t{task['task']} \t[{status}]")
     print("="*40)
 
 def mark_done():
@@ -61,8 +66,14 @@ def delete_task():
 
 
 while True:
+
+    # membuat clear untuk CLI
+    os.system("cls")
+    # os.system("clear")
+
     show_menu()
-    choice = input("Choose an option: ")
+    print("="*40)
+    choice = input("\nChoose an option : ")
 
     if choice == '1':
         add_task()
@@ -72,8 +83,11 @@ while True:
         mark_done()
     elif choice == '4':
         delete_task()
-    elif choice == '5':
-        print("GoodBye!!")
-        break
     else:
         print("Enter invalid number. try again!")
+
+    # untuk konfirmasi user
+    isdone = input("\nLanjut ? (y/n) : ")
+
+    if isdone == 'n':
+        break
